@@ -1,0 +1,153 @@
+body {
+  font-family: Arial;
+  background-color: #f4f4f4;
+  padding: 20px;
+  color: #333;
+  background-image: url("./img/teste.jpg");
+  background-position: center;
+  background-size: auto;
+}
+
+.app {
+  max-width: 830px;
+  background-color: #f4f4f4;
+  margin: auto;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.app h1 {
+  text-align: center;
+  font-size: 35px;
+}
+
+.search {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+  width: 100%;
+}
+
+.search input {
+  height: 20px;
+  width: 85%;
+  padding: 5px;
+  border-radius: 8px;
+  border: none;
+  background-color: #dfdfdf;
+}
+
+.filter {
+  margin-left: 5px;
+  width: 15%;
+}
+
+.filter select {
+  width: 100%;
+  padding: 7.8px 0px 7.8px 0px;
+  border-radius: 8px;
+  border: none;
+  background-color: #dfdfdf;
+}
+
+.ordenacao {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.ordenacao button {
+  background-color: rgb(0, 67, 252);
+}
+
+.app .todo {
+  background-color: rgb(240, 235, 235);
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.596);
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  
+}
+
+.date {
+  font-size: 10px;
+  color: #505050;
+}
+
+.app .todo .buttons {
+  width: 150px;
+  display: flex;
+  gap: 10px;
+}
+
+ button {
+  border: none;
+  padding: 8px;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+#category {
+  text-align: center;
+  width: 80px;
+  padding: 5px;
+  border-radius: 15px;
+
+  font-weight: 600;
+  color: #fff;
+}
+
+.app .todo .buttons .completar {
+  background-color: green;
+}
+
+.app .todo .buttons .fechar {
+  background-color: red;
+}
+
+.Estudos {
+  background-color: rgb(67, 55, 224);
+}
+
+.Trabalho {
+  background-color: rgb(243, 0, 41);
+}
+
+.Pessoal {
+  background-color: rgb(240, 236, 0);
+}
+
+.formNewTask {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.formNewTask textarea {
+  width: 97.8%;
+  height: 80px;
+  padding: 8px;
+  margin-bottom: 10px;
+  resize: none;
+  border-radius: 8px;
+}
+
+.formNewTask .teste {
+  width: 100%;
+}
+
+.formNewTask .teste select {
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.formNewTask .teste button{
+  background-color: rgb(0, 67, 252);
+  margin-left: 10px;
+}
