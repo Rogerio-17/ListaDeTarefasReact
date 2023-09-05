@@ -4,7 +4,7 @@ export default function TodoListe({ todo, remove, complete }) {
   return (
     <div>
       {/*----- Pega os objetos dentro da useState e percorre com map ------*/}
-      <div className="todo">
+      <div className="todo" >
         <div className="content">
           <p style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}>
             {todo.text}
