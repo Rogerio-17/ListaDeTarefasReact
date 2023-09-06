@@ -1,7 +1,11 @@
 import React from "react";
 import { useState } from "react";
+import { toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 
-export default function FormTodo({addTodo}) {
+
+
+export default function FormTodo({addTodo, notify}) {
   const [value, setValue] = useState("");
   const [category, setCategory] = useState("");
 
@@ -9,7 +13,8 @@ export default function FormTodo({addTodo}) {
   const handleSubmit = (e) => {
     e.preventDefault()
     if(!value || !category) {
-      return(alert("Para criar a tarefa, preencha todos os campos"))
+      toast.error("teste")
+      return(toast.error("teste"))
     }
     
     addTodo(value, category)
