@@ -4,7 +4,7 @@ import FormTodo from "./components/FormTodo";
 import TodoListe from "./components/todo";
 import Search from "./components/Search";
 import Ordenacao from "./components/Odenacao";
-import  { toast } from "react-toastify"
+import  { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 
 //
@@ -75,6 +75,7 @@ function App() {
       todo.id !== id ? todo : null
     );
     setTodos(filteredTodos);
+    toast.success("Tarefa deletada com sucesso.")
   };
   
   // Seleciona botão para adicionar classe de seleção
@@ -106,6 +107,7 @@ function App() {
   return (
     // Div principal
     <div className="app">
+      <ToastContainer></ToastContainer>
       {/*Componente de formulario para criação de nova tarefa*/}
       <FormTodo addTodo={addTodo}></FormTodo>
       <h1>Lista de tarefas</h1>
@@ -125,6 +127,7 @@ function App() {
       ></Ordenacao>
       {/*----- Div secundaria ------*/}
       <div className="todo-list">
+        
         {todos
           .filter((todo) =>
           //Verifica de filter é igual a All se for vai retornar tudo, 
@@ -149,7 +152,10 @@ function App() {
               complete={completeTodo}
               remove={removeTodo}
             ></TodoListe>
-          ))}
+          ))
+          }
+
+          
       </div>
     </div>
   );

@@ -1,11 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import { toast } from "react-toastify"
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css'; 
 
 
 
-export default function FormTodo({addTodo, notify}) {
+export default function FormTodo({addTodo}) {
   const [value, setValue] = useState("");
   const [category, setCategory] = useState("");
 
@@ -13,10 +13,10 @@ export default function FormTodo({addTodo, notify}) {
   const handleSubmit = (e) => {
     e.preventDefault()
     if(!value || !category) {
-      toast.error("teste")
-      return(toast.error("teste"))
+      return(toast.error("Por favor! Preencha todos os campos."))
     }
     
+    toast.success("Tarefa criada com sucesso")
     addTodo(value, category)
     setValue("")
     setCategory("")
