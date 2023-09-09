@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import FormTodo from "./components/FormTodo";
 import TodoListe from "./components/todo";
@@ -6,101 +6,88 @@ import Search from "./components/Search";
 import Ordenacao from "./components/Odenacao";
 import  { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
+import { db } from "./firebaseConnection";
+import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
+
 
 //
 function App() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
+  const [sort, setSort] = useState("")
   const [botaoSelecionado, setBotaoSelecionado] = useState(null);
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      text: "criar funcionalidade x no sistema",
-      category: "Trabalho",
-      isCompleted: false,
-      date: "2021-08-30",
-    },
-    {
-      id: 2,
-      text: "Ir pra academia",
-      category: "Pessoal",
-      isCompleted: false,
-      date: "2023-09-02",
-    },
-    {
-      id: 3,
-      text: "Estudar React",
-      category: "Estudos",
-      isCompleted: false,
-      date: "2022-01-09",
-    },
-  ]);
+  const [atualizarDados, setAtualizarDados] = useState(false);
+  const [todos, setTodos] = useState([]);
+  const taskCollectionRef = collection(db, "task")
+
+  useEffect(() => {
+    const getTask = async () => {
+      try {
+        const data = await getDocs(taskCollectionRef);
+        const dadoFirebase = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        setTodos(dadoFirebase);
+      } catch (error) {
+        toast.error("Erro ao carregar dados! Recarregue a página")
+      }
+    };
+  
+    getTask();
+  }, [atualizarDados])
+
+
 
   // Adiciona uma nova tarefa
-  const addTodo = (text, category) => {
+  const addTodo = async (text, category) => {
     const data = new Date();
     const dia = data.getDate();
     const mes = data.getMonth() + 1;
     const ano = data.getFullYear();
-    const newTodo = [
-      ...todos,
+    const newTodo = 
       {
-        id: Math.floor(Math.random() * 10000),
+        id: Math.floor(Math.random() * 1000000),
         text,
         category,
         isCompleted: false,
         date: `${ano}-${mes < 10 ? "0" + mes : mes}-${
           dia < 10 ? "0" + dia : dia
         }`,
-      },
-    ];
-
-    setTodos(newTodo);
+      }
+    setAtualizarDados(!atualizarDados)
+    const task = await addDoc(taskCollectionRef, newTodo)
+    task()
   };
 
   // Completar tarefa
   const completeTodo = (id) => {
     const newTodos = [...todos];
-    newTodos.map((todo) =>
-      todo.id === id ? (todo.isCompleted = !todo.isCompleted) : todo
+    newTodos.map((todo) => {
+     const docRef = doc(taskCollectionRef, todo.id)
+     const isCompleted = {
+      isCompleted: true
+     }
+
+      if(todo.id === id){
+        updateDoc(docRef, isCompleted)
+        setAtualizarDados(!atualizarDados)
+      } 
+
+    }
     );
-    setTodos(newTodos);
+
   };
 
   // Remove um tarefa
-  const removeTodo = (id) => {
-    const newTodos = [...todos];
-    //Filtra todos os objetos de um array e pega apenas o passado por parametro
-    const filteredTodos = newTodos.filter((todo) =>
-      todo.id !== id ? todo : null
-    );
-    setTodos(filteredTodos);
-    toast.success("Tarefa deletada com sucesso.")
+  const removeTodo = async (id) => {
+    const taskDoc = doc(db, 'task', id)
+    await deleteDoc(taskDoc)
+
+    toast.success("Tarefa deletada com sucesso!")
+    setAtualizarDados(!atualizarDados)
   };
   
   // Seleciona botão para adicionar classe de seleção
   const handleButtonClick = (botaoId) => {
     setBotaoSelecionado(botaoId);
-  };
-
-  // Ordena por mais recentes
-  const ordenarPorDataRecentes = () => {
-    const dadosOrdenados = [...todos].sort((a, b) => {
-      const dataA = new Date(a.date);
-      const dataB = new Date(b.date);
-      return dataB - dataA; // Classifica em ordem decrescente
-    });
-    setTodos(dadosOrdenados);
-  };
-
-  // Ordena por mais antigos
-  const ordenarPorDataAntigos = () => {
-    const dadosOrdenados = [...todos].sort((a, b) => {
-      const dataA = new Date(a.date);
-      const dataB = new Date(b.date);
-      return dataA - dataB; // Classifica em ordem decrescente
-    });
-    setTodos(dadosOrdenados);
   };
 
   // Retorno
@@ -120,10 +107,10 @@ function App() {
       ></Search>
       {/*Componente de ordenar tarefa*/}
       <Ordenacao
-        ordenarPorDataRecentes={ordenarPorDataRecentes}
-        ordenarPorDataAntigos={ordenarPorDataAntigos}
         clique={handleButtonClick}
         value={botaoSelecionado}
+        setSort={setSort}
+        
       ></Ordenacao>
       {/*----- Div secundaria ------*/}
       <div className="todo-list">
@@ -144,6 +131,7 @@ function App() {
           .filter((todo) =>
             todo.text.toLowerCase().includes(search.toLowerCase())
           )
+          .sort((a, b) => sort === "Asc" ?  b.date.localeCompare(a.date) :  a.date.localeCompare(b.date))
           //Percorreo o array todos e retorna o valor para ser montado o componente
           .map((todo) => (
             <TodoListe

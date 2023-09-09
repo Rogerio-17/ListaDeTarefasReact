@@ -11,7 +11,7 @@ export default function TodoListe({ todo, remove, complete }) {
           <p style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}>
             {todo.text}
           </p>
-          <p className="date">Data da abertura {todo.date}</p>
+          <p className="date">Data de abertura {todo.date}</p>
           <p className={todo.category} id="category">
             {todo.category}
           </p>

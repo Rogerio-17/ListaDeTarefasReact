@@ -1,24 +1,23 @@
 import React from "react";
+import atualizarImg from "../img/atualizar.png"
 
-export default function ordenacao({ clique, value, ordenarPorDataRecentes, ordenarPorDataAntigos }) {
+export default function ordenacao({ clique, value, setSort, atualizar }) {
   return (
     <div className="ordenacao">
+      
       <button
         className={value === "botao1" ? "selected" : ""}
-        onClick={() => {
-          ordenarPorDataRecentes(), clique("botao1");
-        }}
+        onClick={() => { setSort("Asc"), clique("botao1");}}
       >
         Mais recentes
       </button>
       <button
         className={value === "botao2" ? "selected" : ""}
-        onClick={() => {
-          ordenarPorDataAntigos(), clique("botao2");
-        }}
+        onClick={() => { setSort("Desc"), clique("botao2");}}
       >
         Mais antigos
       </button>
+
     </div>
   );
 }

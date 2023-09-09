@@ -15,9 +15,8 @@ export default function FormTodo({addTodo}) {
     if(!value || !category) {
       return(toast.error("Por favor! Preencha todos os campos."))
     }
-    
-    toast.success("Tarefa criada com sucesso")
     addTodo(value, category)
+    toast.success("Tarefa criada com sucesso!")
     setValue("")
     setCategory("")
 
