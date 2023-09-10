@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import FormTodo from "./components/FormTodo";
-import TodoListe from "./components/todo";
+import TodoListe from "./components/Todo";
 import Search from "./components/Search";
 import Ordenacao from "./components/Odenacao";
 import  { toast, ToastContainer } from "react-toastify"
@@ -15,6 +15,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState("")
+  const [editando, setEditando] = useState(false)
   const [botaoSelecionado, setBotaoSelecionado] = useState(null);
   const [atualizarDados, setAtualizarDados] = useState(false);
   const [todos, setTodos] = useState([]);
@@ -33,8 +34,6 @@ function App() {
   
     getTask();
   }, [atualizarDados])
-
-
 
   // Adiciona uma nova tarefa
   const addTodo = async (text, category) => {
@@ -56,6 +55,24 @@ function App() {
     const task = await addDoc(taskCollectionRef, newTodo)
     task()
   };
+
+  // Editar tarefa
+  const editar = (id, texto) => {
+    const newTodos = [...todos];
+    newTodos.map((todo) => {
+     const docRef = doc(taskCollectionRef, todo.id)
+     const textUp = {
+      text: texto
+     }
+
+      if(todo.id === id){
+        updateDoc(docRef, textUp).then(() => toast.success("Tarefa editada com sucesso!")).catch(() => toast.error("Erro ao editar tarefa!"))
+        setAtualizarDados(!atualizarDados)
+        
+      } 
+    }
+    );
+  }
 
   // Completar tarefa
   const completeTodo = (id) => {
@@ -137,6 +154,8 @@ function App() {
             <TodoListe
               key={todo.id}
               todo={todo}
+              editando={editando}
+              edite={editar}
               complete={completeTodo}
               remove={removeTodo}
             ></TodoListe>

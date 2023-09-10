@@ -27,6 +27,12 @@ body {
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#000000", endColorstr="#5257E5", GradientType=1 );
 }
 
+textarea:focus {
+  box-shadow: 0 0 0 0;
+  border: 1px solid black;
+  outline: 0;
+} 
+
 .app {
   max-width: 1180px;
   background-color: #f4f4f4;
@@ -118,6 +124,10 @@ body {
   gap: 10px;
 }
 
+.content{
+  width: 95%;
+}
+
 button {
   border: none;
   padding: 8px;
@@ -125,6 +135,7 @@ button {
   border-radius: 8px;
   font-weight: 500;
   cursor: pointer;
+  background-color: transparent;
 }
 
 #category {
@@ -132,35 +143,44 @@ button {
   width: 80px;
   padding: 5px;
   border-radius: 15px;
-
   font-weight: 600;
   color: #fff;
 }
 
-.app .todo .buttons .completar {
-  background-color: green;
-  border: 1px solid transparent;
-  font-weight: 500;
+.app .todo .buttons img {
+  width: 28px;
+  background-color: transparent;
+  transition: 0.2s;
 }
 
-.app .todo .buttons .completar:hover {
-  background-color: #fff;
-  border: 1px solid green;
+
+.app .todo .buttons img:hover {
+  transform: scale(1.1);
+}
+
+.confirmEdite {
+  width: 98%;
+  display: flex;
+  justify-content: right;
+}
+
+.confirmEdite button{
   color: green;
-  transition: 0.3s;
+  font-size: 14px;
+  padding: 5px;
 }
 
-.app .todo .buttons .fechar {
-  background-color: red;
-  border: 1px solid transparent;
-  font-weight: 500;
-  transition: 0.3s;
+.textAreaTarefas{
+  width: 98%;
+  height: 50px;
+  border: none;
+  resize: none;
+  background-color: transparent;
+  font-family: Arial;
+  padding: 5px;
 }
-
-.app .todo .buttons .fechar:hover {
-  background-color: #fff;
-  border: 1px solid red;
-  color: red;
+.textAreaTarefas:focus{
+  border: 0 none;
 }
 
 .Estudos {
@@ -188,6 +208,7 @@ button {
   margin-bottom: 10px;
   resize: none;
   border-radius: 8px;
+  border: 1px solid black;
 }
 
 .formNewTask .teste {

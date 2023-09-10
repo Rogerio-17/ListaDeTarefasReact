@@ -1,7 +1,7 @@
 import React from "react";
 import atualizarImg from "../img/atualizar.png"
 
-export default function ordenacao({ clique, value, setSort, atualizar }) {
+export default function ordenacao({ clique, value, setSort }) {
   return (
     <div className="ordenacao">
       
