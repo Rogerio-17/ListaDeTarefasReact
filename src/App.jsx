@@ -20,6 +20,7 @@ function App() {
   const [atualizarDados, setAtualizarDados] = useState(false);
   const [todos, setTodos] = useState([]);
   const taskCollectionRef = collection(db, "task")
+  const [campo, setCampo] = useState("")
 
   useEffect(() => {
     const getTask = async () => {
@@ -86,6 +87,7 @@ function App() {
       if(todo.id === id){
         updateDoc(docRef, isCompleted)
         setAtualizarDados(!atualizarDados)
+        toast.success("Tarefa concluida com sucesso. Parabens!")
       } 
 
     }
@@ -107,6 +109,14 @@ function App() {
     setBotaoSelecionado(botaoId);
   };
 
+  const taskVazia = () => {
+    if(todos == "" && campo == ""){
+      setCampo(true)
+    }
+  }
+
+  taskVazia()
+
   // Retorno
   return (
     // Div principal
@@ -127,7 +137,6 @@ function App() {
         clique={handleButtonClick}
         value={botaoSelecionado}
         setSort={setSort}
-        
       ></Ordenacao>
       {/*----- Div secundaria ------*/}
       <div className="todo-list">
@@ -158,6 +167,7 @@ function App() {
               edite={editar}
               complete={completeTodo}
               remove={removeTodo}
+              
             ></TodoListe>
           ))
           }

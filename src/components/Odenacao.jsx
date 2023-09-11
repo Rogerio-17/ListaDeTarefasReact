@@ -1,7 +1,6 @@
 import React from "react";
-import atualizarImg from "../img/atualizar.png"
 
-export default function ordenacao({ clique, value, setSort }) {
+export default function ordenacao({ clique, value, setSort, campo }) {
   return (
     <div className="ordenacao">
       
@@ -17,7 +16,15 @@ export default function ordenacao({ clique, value, setSort }) {
       >
         Mais antigos
       </button>
-
+      {
+        campo ? (
+          <div>
+            <p>Nenhuma tarefa localizada</p>
+          </div>
+        ) : (
+          <div></div>
+        )
+      }
     </div>
   );
 }

@@ -31,6 +31,7 @@ textarea:focus {
   box-shadow: 0 0 0 0;
   border: 1px solid black;
   outline: 0;
+  font-family: Arial;
 } 
 
 .app {
